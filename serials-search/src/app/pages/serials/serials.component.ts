@@ -3,13 +3,14 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-serials',
   templateUrl: './serials.component.html',
-  styleUrls: ['./serials.component.scss']
+  styleUrls: ['./serials.component.scss'],
 })
-export class SerialsComponent implements OnInit {
+export class SerialsComponent {
+  public inputValue: string = '';
 
-  constructor() { }
+  constructor() {}
 
-  ngOnInit(): void {
+  public searchSerials() {
+    if (this.inputValue === '') return;
   }
-
 }

@@ -1,1 +1,21 @@
-<p>serials works!</p>
+<div class="serials">
+  <div class="serials__row">
+    <h1>Search for a tv serial</h1>
+  </div>
+  <div class="serials__row">
+    <div class="serials__input">
+      <mat-form-field class="example-form-field">
+        <mat-label>The name of the series</mat-label>
+        <input matInput type="text" [(ngModel)]="inputValue" />
+      </mat-form-field>
+    </div>
+    <div class="serials__button">
+      <button mat-raised-button color="primary" (click)="searchSerials()">
+        Search
+      </button>
+    </div>
+  </div>
+  <div class="serials__row">
+    Table with result
+  </div>
+</div>
