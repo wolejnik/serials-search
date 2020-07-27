@@ -123,6 +123,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "serials-search"
+    }
+  },
+  "defaultProject": "serials-search",
+  "cli": {
+    "analytics": false
+  }
 }
