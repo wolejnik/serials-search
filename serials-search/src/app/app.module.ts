@@ -10,6 +10,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
+import { MatTableModule } from '@angular/material/table';
+import { MatSortModule } from '@angular/material/sort';
+import { MatPaginatorModule } from '@angular/material/paginator';
 
 @NgModule({
   declarations: [AppComponent, NavbarComponent, SerialsComponent],
@@ -21,6 +24,9 @@ import { HttpClientModule } from '@angular/common/http';
     MatButtonModule,
     FormsModule,
     HttpClientModule,
+    MatSortModule,
+    MatTableModule,
+    MatPaginatorModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
