@@ -1,0 +1,112 @@
+<div class="serials__row">
+  <mat-form-field appearance="fill">
+    <mat-label>Choose a status</mat-label>
+    <mat-select [(ngModel)]="selectedFiltr" (ngModelChange)="filtrStatus()">
+      <mat-option value="Ended">Ended1</mat-option>
+      <mat-option value="ended">ended2</mat-option>
+      <mat-option value="100">100</mat-option>
+      <mat-option value="Running">Running</mat-option>
+      <mat-option value="Cora">Cora</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field appearance="fill" style="margin-left: 3rem;">
+    <mat-label>Choose a genres</mat-label>
+    <mat-select
+      [formControl]="toppings"
+      multiple
+      (openedChange)="comboChange($event)"
+    >
+      <mat-option *ngFor="let topping of toppingList" [value]="topping">{{
+        topping
+      }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <div class="serials__button">
+    <button mat-raised-button color="primary" (click)="resetFilter()">
+      Reset
+    </button>
+  </div>
+</div>
+
+<table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+  <ng-container matColumnDef="id">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>No.</th>
+    <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="name">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+    <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+  </ng-container>
+
+  <ng-container matColumnDef="raitng">
+    <th mat-header-cell *matHeaderCellDef mat-sort-header>raitng</th>
+    <td mat-cell *matCellDef="let element">{{ element.raitng }}</td>
+  </ng-container>
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+</table>
+
+<!-- Angular 8 pagination -->
+<mat-paginator
+  [pageSizeOptions]="[5, 10, 15]"
+  showFirstLastButtons
+></mat-paginator>
+
+<!-- <div>
+  <table mat-table [dataSource]="dataSource" matSort class="table">
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+      <td mat-cell *matCellDef="let row">{{ row.id }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="progress">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Progress</th>
+      <td mat-cell *matCellDef="let row">{{ row.progress }}%</td>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Name</th>
+      <td mat-cell *matCellDef="let row">{{ row.name }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="color">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Color</th>
+      <td mat-cell *matCellDef="let row" [style.color]="row.color">
+        {{ row.color }}
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+
+  <mat-paginator
+    class="table"
+    [pageSizeOptions]="[5, 10, 25, 100]"
+  ></mat-paginator>
+</div> -->
+
+<!-- <div>
+  <table mat-table [dataSource]="dataSource" matSort class="table">
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+      <td mat-cell *matCellDef="let row">{{ row.show.id }}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>TITLE</th>
+      <td mat-cell *matCellDef="let row">{{ row.show.name }}</td>
+    </ng-container>
+
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+  </table>
+
+  <mat-paginator
+    class="table"
+    [pageSizeOptions]="[5, 10, 25, 100]"
+  ></mat-paginator>
+</div> -->

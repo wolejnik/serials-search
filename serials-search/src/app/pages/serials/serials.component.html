@@ -6,7 +6,7 @@
     <div class="serials__input">
       <mat-form-field class="example-form-field">
         <mat-label>The name of the series</mat-label>
-        <input matInput type="text" [(ngModel)]="inputValue" />
+        <input matInput type="text" (blur)="setInputValue($event)" />
       </mat-form-field>
     </div>
     <div class="serials__button">
@@ -15,7 +15,7 @@
       </button>
     </div>
   </div>
-  <ng-container *ngIf="ready">
+  <!-- <ng-container *ngIf="ready">
     <div class="serials__table">
       <mat-table [dataSource]="dataSource" matSort>
         <ng-container matColumnDef="id">
@@ -45,10 +45,6 @@
             </ng-template>
           </mat-cell>
           <mat-cell *matCellDef="let row">
-            <!-- <ul>
-              <li *ngFor="let genre of row.show.genres">{{ genre }}</li>
-            </ul> -->
-            <!-- {{ row.show.genres }} -->
           </mat-cell>
         </ng-container>
 
@@ -56,7 +52,6 @@
           <mat-header-cell *matHeaderCellDef mat-sort-header>
             PREMIERE DATE
           </mat-header-cell>
-          <!-- <mat-cell *matCellDef="let row" [style.color]="row.color"> -->
           <mat-cell *matCellDef="let row">
             <ng-container *ngIf="row.show.premiered; else elsePremiered">
               {{ row.show.premiered }}
@@ -84,7 +79,13 @@
         <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
         <mat-row *matRowDef="let row; columns: displayedColumns"> </mat-row>
       </mat-table>
+      <mat-paginator [pageSizeOptions]="[5, 10, 25]"></mat-paginator>
     </div>
-  </ng-container>
-  <mat-paginator [pageSizeOptions]="[5, 10, 25]"></mat-paginator>
+  </ng-container> -->
 </div>
+<ng-container *ngIf="ready">
+  <app-table-serials
+    [searchValue]="inputValue"
+    [data]="dataRequest"
+  ></app-table-serials>
+</ng-container>
