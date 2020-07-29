@@ -15,77 +15,7 @@
       </button>
     </div>
   </div>
-  <!-- <ng-container *ngIf="ready">
-    <div class="serials__table">
-      <mat-table [dataSource]="dataSource" matSort>
-        <ng-container matColumnDef="id">
-          <mat-header-cell *matHeaderCellDef mat-sort-header>
-            ID
-          </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{ row.show.id }} </mat-cell>
-        </ng-container>
-
-        <ng-container matColumnDef="name">
-          <mat-header-cell *matHeaderCellDef mat-sort-header>
-            TITLE
-          </mat-header-cell>
-          <mat-cell *matCellDef="let row"> {{ row.show.name }} </mat-cell>
-        </ng-container>
-
-        <ng-container matColumnDef="genres">
-          <mat-header-cell *matHeaderCellDef>
-            GENRES
-          </mat-header-cell>
-          <mat-cell *matCellDef="let row">
-            <ng-container *ngIf="row.show.genres.length !== 0; else elseGenres">
-              {{ row.show.genres }}
-            </ng-container>
-            <ng-template #elseGenres>
-              Lack of genres
-            </ng-template>
-          </mat-cell>
-          <mat-cell *matCellDef="let row">
-          </mat-cell>
-        </ng-container>
-
-        <ng-container matColumnDef="premiered">
-          <mat-header-cell *matHeaderCellDef mat-sort-header>
-            PREMIERE DATE
-          </mat-header-cell>
-          <mat-cell *matCellDef="let row">
-            <ng-container *ngIf="row.show.premiered; else elsePremiered">
-              {{ row.show.premiered }}
-            </ng-container>
-            <ng-template #elsePremiered>
-              Lack of premiere date
-            </ng-template>
-          </mat-cell>
-        </ng-container>
-
-        <ng-container matColumnDef="rating">
-          <mat-header-cell *matHeaderCellDef mat-sort-header>
-            RATING
-          </mat-header-cell>
-          <mat-cell *matCellDef="let row">
-            <ng-container *ngIf="row.show.rating.average; else elseTemplate">
-              {{ row.show.rating.average }}
-            </ng-container>
-            <ng-template #elseTemplate>
-              Lack of rating
-            </ng-template>
-          </mat-cell>
-        </ng-container>
-
-        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-        <mat-row *matRowDef="let row; columns: displayedColumns"> </mat-row>
-      </mat-table>
-      <mat-paginator [pageSizeOptions]="[5, 10, 25]"></mat-paginator>
-    </div>
-  </ng-container> -->
 </div>
 <ng-container *ngIf="ready">
-  <app-table-serials
-    [searchValue]="inputValue"
-    [data]="dataRequest"
-  ></app-table-serials>
+  <app-table-serials [searchValue]="inputValue"></app-table-serials>
 </ng-container>

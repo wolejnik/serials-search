@@ -1,9 +1,4 @@
-import { RequestService } from './../../services/request/request.service';
-import { Component, ViewChild, ChangeDetectorRef, OnInit } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort, MatSortable } from '@angular/material/sort';
-import { FormControl } from '@angular/forms';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-serials',
@@ -12,21 +7,13 @@ import { FormControl } from '@angular/forms';
 })
 export class SerialsComponent {
   public inputValue: string = '';
-  public dataRequest = [];
   public ready: boolean = false;
 
-  constructor(private req: RequestService) {}
+  constructor() {}
 
   public searchSerials() {
     if (this.inputValue === '') return;
 
-    this.dataRequest = [];
-    this.req.getSerials(this.inputValue).subscribe((serials) => {
-      serials.forEach((serial) => {
-        this.dataRequest.push(serial);
-      });
-    });
-    console.log('dataRequest', this.dataRequest);
     this.ready = true;
   }
 
