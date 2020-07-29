@@ -4,7 +4,6 @@ import {
   ViewChild,
   Input,
   OnChanges,
-  SimpleChange,
   SimpleChanges,
 } from '@angular/core';
 import { MatSortable, MatSort } from '@angular/material/sort';
@@ -19,24 +18,31 @@ import { RequestService } from 'src/app/services/request/request.service';
   styleUrls: ['./table-serials.component.scss'],
 })
 export class TableSerialsComponent implements OnInit, OnChanges {
-  displayedColumns: string[] = ['id', 'name', 'raitng'];
-  // public displayedColumns = ['id', 'name', 'genres', 'premiered', 'rating'];
-  dataSource: MatTableDataSource<any>;
-  selectedFiltr: any;
-  valueSelectedMulti: string;
-  public hiddenTable: boolean = false;
-  public dataRequest = [];
+  public displayedColumns = ['name', 'genres', 'premiered', 'rating'];
+  public dataSource: MatTableDataSource<any>;
+  public selectedFiltrStatus: any;
+  public valueSelectedMulti: string = '';
+
   @Input() searchValue: string = '';
-  @Input() data: any;
 
   toppings = new FormControl();
-  toppingList: string[] = [
-    'black',
-    'blue',
-    'red',
-    'Pepperoni',
-    'Sausage',
-    'Tomato',
+  public genreList: string[] = [
+    'Action',
+    'Adult',
+    'Adventure',
+    'Comedy',
+    'DIY',
+    'Family',
+    'Drama',
+    'Horror',
+    'Science-Fiction',
+    'War',
+  ];
+  public statusList: string[] = [
+    'Running',
+    'Ended',
+    'To Be Determined',
+    'In Development',
   ];
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -44,47 +50,36 @@ export class TableSerialsComponent implements OnInit, OnChanges {
 
   constructor(private req: RequestService) {}
   ngOnChanges(changes: SimpleChanges): void {
-    this.test();
+    // this.initData();
   }
 
   ngOnInit() {
-    this.initData();
+    this.req.make('GET', `/search/shows?q=${this.searchValue}`).then((res) => {
+      const mapped = Object.keys(res).map((key) => ({
+        value: res[key].show,
+      }));
+      this.dataSource = new MatTableDataSource(ELEMENT_DATA);
+      console.log(this.dataSource);
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
+    });
   }
 
   public initData() {
-    console.log('this.searchValue', this.searchValue);
-    this.dataSource = new MatTableDataSource(this.data);
-    this.dataSource.paginator = this.paginator;
-    this.sort.sort({ id: 'raitng', start: 'desc' } as MatSortable);
-    this.dataSource.sort = this.sort;
+    this.req.make('GET', `/search/shows?q=${this.searchValue}`).then((res) => {
+      const mapped = Object.keys(res).map((key) => ({
+        value: res[key].show,
+      }));
+      this.dataSource = new MatTableDataSource(ELEMENT_DATA);
+      this.sort.sort({ id: 'rating', start: 'desc' } as MatSortable);
 
-    console.log('hardcode', this.dataSource);
-  }
-
-  public test() {
-    this.dataRequest = [];
-    this.req.getSerials(this.searchValue).subscribe((serials) => {
-      serials.forEach((serial) => {
-        this.dataRequest.push(serial);
-        // this.dataSource = new MatTableDataSource(this.dataRequest);
-        // this.dataSource.paginator = this.paginator;
-        // this.sort.sort({ id: 'rating', start: 'desc' } as MatSortable);
-        // this.dataSource.sort = this.sort;
-      });
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
     });
-    // console.log('hardcode', this.dataSource);
-  }
-
-  applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
   }
 
   public filtrStatus() {
-    this.dataSource.filter = this.selectedFiltr.trim().toLowerCase();
+    this.dataSource.filter = this.selectedFiltrStatus.trim().toLowerCase();
 
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
@@ -97,40 +92,91 @@ export class TableSerialsComponent implements OnInit, OnChanges {
         this.toppings.value && this.toppings.value.toString();
       this.dataSource.filter = this.valueSelectedMulti.trim().toLowerCase();
       if (this.dataSource.filteredData.length === 0) {
-        this.hiddenTable = true;
       }
     }
   }
 
   resetFilter() {
-    this.selectedFiltr = '';
+    this.selectedFiltrStatus = '';
     this.valueSelectedMulti = '';
 
-    // Assign the data to the data source for the table to render
     this.dataSource = new MatTableDataSource(ELEMENT_DATA);
     this.dataSource.paginator = this.paginator;
-    this.sort.sort({ id: 'progress', start: 'desc' } as MatSortable);
+    this.sort.sort({ id: 'rating', start: 'desc' } as MatSortable);
     this.dataSource.sort = this.sort;
-    this.hiddenTable = false;
     this.toppings.reset();
   }
 }
 
-export interface PeriodicElement {
-  name: string;
-  id: number;
-  raitng: number;
-}
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  { id: 1, name: 'Hydrogen', raitng: 1.0079 },
-  { id: 2, name: 'Helium', raitng: 4.0026 },
-  { id: 3, name: 'Lithium', raitng: 6.941 },
-  { id: 4, name: 'Beryllium', raitng: 9.0122 },
-  { id: 5, name: 'Boron', raitng: 10.811 },
-  { id: 6, name: 'Carbon', raitng: 12.0107 },
-  { id: 7, name: 'Nitrogen', raitng: 14.0067 },
-  { id: 8, name: 'Oxygen', raitng: 15.9994 },
-  { id: 9, name: 'Fluorine', raitng: 18.9984 },
-  { id: 10, name: 'Neon', raitng: 20.1797 },
+const ELEMENT_DATA = [
+  {
+    name: 'The 100',
+    rating: { average: 7.9 },
+    premiered: '2014-03-19',
+    genres: ['Action', 'Adventure', 'Science-Fiction'],
+    status: 'Ended',
+  },
+  {
+    name: '100% Hotter',
+    rating: { average: 4.2 },
+    premiered: '2013-04-29',
+    genres: ['DIY'],
+    status: 'Running',
+  },
+  {
+    name: '100 Code',
+    rating: { average: 6.1 },
+    premiered: '2018-07-01',
+    genres: ['Action', 'War'],
+    status: 'Running',
+  },
+  {
+    name: '100&',
+    rating: { average: 9.21 },
+    premiered: '2019-12-19',
+    genres: ['Drama'],
+    status: 'Running',
+  },
+  {
+    name: '100 Dry Dream Home',
+    rating: { average: 8.1 },
+    premiered: '2010-06-30',
+    genres: ['Food'],
+    status: 'Running',
+  },
+  {
+    name: '100 Humans',
+    rating: { average: 10.0 },
+    premiered: '1996-02-19',
+    genres: ['Comedy', 'Adventure'],
+    status: 'Ended',
+  },
+  {
+    name: '100 film',
+    rating: { average: 6.7 },
+    premiered: '2020-07-19',
+    genres: ['Science-Fiction'],
+    status: 'Ended',
+  },
+  {
+    name: 'Psycho 100',
+    rating: { average: 9.94 },
+    premiered: '2001-11-19',
+    genres: ['Music'],
+    status: 'Ended',
+  },
+  {
+    name: '$100 Makeover',
+    rating: { average: 8.4 },
+    premiered: '2004-06-19',
+    genres: ['Horror', 'Science-Fiction'],
+    status: 'Running',
+  },
+  {
+    name: '100% Bakvis',
+    rating: { average: 7.7 },
+    premiered: '2009-05-19',
+    genres: ['Family', 'Adventure'],
+    status: 'Running',
+  },
 ];

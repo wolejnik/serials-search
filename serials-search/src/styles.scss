@@ -21,3 +21,67 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+.serials {
+  padding: 2rem;
+
+  &__row {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin: auto;
+    width: 80%;
+  }
+
+  &__column {
+    display: flex;
+    flex-direction: column;
+    flex-basis: 100%;
+    flex: 1;
+  }
+
+  &__input {
+    &:nth-child(2n) {
+      margin-left: 2rem;
+    }
+  }
+
+  &__button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-left: 2rem;
+  }
+}
+
+mat-table,
+mat-paginator {
+  width: 100%;
+}
+
+@media screen and (max-width: 768px) {
+  .serials {
+    padding: 0.75rem;
+
+    &__row {
+      flex-direction: column;
+      align-items: center;
+    }
+
+    &__button {
+      margin: 0;
+    }
+
+    &__input {
+      margin: 0 !important;
+    }
+  }
+
+  h1 {
+    font-size: 1.75rem;
+  }
+
+  mat-table {
+    margin-top: 1rem;
+  }
+}
