@@ -10,7 +10,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -32,7 +31,6 @@ import { MatSelectModule } from '@angular/material/select';
     MatButtonModule,
     FormsModule,
     ReactiveFormsModule,
-    HttpClientModule,
     MatSortModule,
     MatTableModule,
     MatPaginatorModule,
