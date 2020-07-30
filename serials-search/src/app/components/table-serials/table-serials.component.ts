@@ -11,6 +11,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { FormControl } from '@angular/forms';
 import { RequestService } from 'src/app/services/request/request.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-table-serials',
@@ -48,7 +49,7 @@ export class TableSerialsComponent implements OnInit, OnChanges {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  constructor(private req: RequestService) {}
+  constructor(private req: RequestService, private router: Router) {}
   ngOnChanges(changes: SimpleChanges): void {
     // this.initData();
   }
@@ -61,6 +62,7 @@ export class TableSerialsComponent implements OnInit, OnChanges {
       this.dataSource = new MatTableDataSource(ELEMENT_DATA);
       console.log(this.dataSource);
       this.dataSource.sort = this.sort;
+      this.sort.sort({ id: 'rating', start: 'desc' } as MatSortable);
       this.dataSource.paginator = this.paginator;
     });
   }
@@ -76,6 +78,10 @@ export class TableSerialsComponent implements OnInit, OnChanges {
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
     });
+  }
+
+  public selectRow(row) {
+    this.router.navigate(['serial/', '1234']);
   }
 
   public filtrStatus() {
@@ -113,7 +119,7 @@ const ELEMENT_DATA = [
     name: 'The 100',
     rating: { average: 7.9 },
     premiered: '2014-03-19',
-    genres: ['Action', 'Adventure', 'Science-Fiction'],
+    genres: ['Action', 'Science-Fiction'],
     status: 'Ended',
   },
   {

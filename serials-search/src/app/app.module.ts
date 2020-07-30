@@ -15,6 +15,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { TableSerialsComponent } from './components/table-serials/table-serials.component';
 import { MatSelectModule } from '@angular/material/select';
+import { SerialComponent } from './pages/serial/serial.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +23,7 @@ import { MatSelectModule } from '@angular/material/select';
     NavbarComponent,
     SerialsComponent,
     TableSerialsComponent,
+    SerialComponent,
   ],
   imports: [
     BrowserModule,
