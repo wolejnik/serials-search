@@ -14,10 +14,13 @@
           </div>
         </div>
         <div class="serials__row">
-          <div class="serials__row--title">
+          <div
+            class="serials__row--title"
+            [style.color]="setColorRating(serial.rating.average)"
+          >
+            <h3>Rating:</h3>
             <h3>
-              Rating:<br />
-              {{ serial.rating }}
+              {{ serial.rating.average }}
             </h3>
           </div>
         </div>

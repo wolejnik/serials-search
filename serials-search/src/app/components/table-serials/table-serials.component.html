@@ -71,10 +71,14 @@
         </mat-header-cell>
         <mat-cell *matCellDef="let row">
           <ng-container *ngIf="row.rating; else elseTemplate">
-            {{ row.rating.average }}
+            <p [style.color]="setColorRating(row.rating.average)">
+              {{ row.rating.average }}
+            </p>
           </ng-container>
           <ng-template #elseTemplate>
-            Lack of rating
+            <p [style.color]="setColorRating(row.rating.average)">
+              Lack of rating
+            </p>
           </ng-template>
         </mat-cell>
       </ng-container>

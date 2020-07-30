@@ -1,3 +1,4 @@
+import { ColorRaiting } from './../../model/Colors';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { RequestService } from 'src/app/services/request/request.service';
@@ -18,31 +19,51 @@ export class SerialComponent implements OnInit {
   ngOnInit(): void {
     this.serialId = this.route.snapshot.paramMap.get('id');
     console.log(' this.serialId', this.serialId);
-    this.req
-      .make('GET', `/singlesearch/shows?q=${this.serialId}`)
-      .then((res) => {
-        if (res) {
-          this.serial = res;
-          this.serial.title = res['name'];
+    this.req.make('GET', `/shows/${this.serialId}`).then((res) => {
+      if (res) {
+        this.serial = res;
+        this.serial.title = res['name'];
 
-          if (this.serial['rating'].average === null) {
-            this.serial.rating = 'Lack of rating';
-          }
-          console.log(res);
+        if (this.serial['rating'].average === null) {
+          this.serial.rating.average = 'Lack of rating';
+        } else {
+          console.log(this.serial['rating'].average);
         }
         this.serialImg = res['image'].medium;
-
-        // if (res['rating'].average === null) {
-        //   this.serial.rating = 'Lack of rating';
-        // }
-        console.log(res['image'].medium);
-        // this.serial.rating = res['rating'].average;
-        // this.serial.img = res['image'].medium;
-        // this.serial.desc = res['summary'];
-      });
+      }
+    });
     setTimeout(() => {
       this.loading = false;
-      console.log(this.loading);
     }, 300);
+  }
+
+  public setColorRating(value: string) {
+    let tempValue = String(value).substr(0, String(value).lastIndexOf('.'));
+
+    switch (tempValue) {
+      case '0':
+        console.log('It is a Sunday.');
+        return ColorRaiting.COLOR_0;
+      case '1':
+        return ColorRaiting.COLOR_1;
+      case '2':
+        return ColorRaiting.COLOR_2;
+      case '3':
+        return ColorRaiting.COLOR_3;
+      case '4':
+        return ColorRaiting.COLOR_4;
+      case '5':
+        return ColorRaiting.COLOR_5;
+      case '6':
+        return ColorRaiting.COLOR_6;
+      case '7':
+        return ColorRaiting.COLOR_7;
+      case '8':
+        return ColorRaiting.COLOR_8;
+      case '9':
+        return ColorRaiting.COLOR_9;
+      case '10':
+        return ColorRaiting.COLOR_10;
+    }
   }
 }
