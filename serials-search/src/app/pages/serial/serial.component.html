@@ -1,0 +1,31 @@
+<ng-container *ngIf="loading; else readyTemplate">
+  Loading data...
+</ng-container>
+<ng-template #readyTemplate>
+  <div class="serials">
+    <div class="serials__row">
+      <div class="serials_column">
+        <img src="{{ serialImg }}" alt="" />
+      </div>
+      <div class="serials_column">
+        <div class="serials__row">
+          <div class="serials__row--title">
+            <h3>Title:<br />{{ serial.name }}</h3>
+          </div>
+        </div>
+        <div class="serials__row">
+          <div class="serials__row--title">
+            <h3>
+              Rating:<br />
+              {{ serial.rating }}
+            </h3>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="serials__row">
+      <h3>Description:</h3>
+      <span class="serials__row--desc" [innerHTML]="serial.summary"></span>
+    </div>
+  </div>
+</ng-template>
