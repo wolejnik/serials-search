@@ -4,22 +4,13 @@
 <ng-template #readyTemplate>
   <div class="serials">
     <div class="serials__row">
-      <div class="serials_column">
-        <img src="{{ serialImg }}" alt="" />
-      </div>
-      <div class="serials_column">
+      <img src="{{ serialImg }}" alt="" />
+      <div class="serials__column">
         <div class="serials__row">
           <div class="serials__row--title">
-            <h3>Title:<br />{{ serial.name }}</h3>
-          </div>
-        </div>
-        <div class="serials__row">
-          <div
-            class="serials__row--title"
-            [style.color]="setColorRating(serial.rating.average)"
-          >
-            <h3>Rating:</h3>
-            <h3>
+            <h3>Title: {{ serial.name }}</h3>
+            <h3 [style.color]="setColorRating(serial.rating.average)">
+              Rating:
               {{ serial.rating.average }}
             </h3>
           </div>

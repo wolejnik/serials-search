@@ -6,7 +6,7 @@ import {
   OnChanges,
   SimpleChanges,
 } from '@angular/core';
-import { MatSortable, MatSort } from '@angular/material/sort';
+import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { MatPaginator } from '@angular/material/paginator';
 import { FormControl } from '@angular/forms';
@@ -27,7 +27,7 @@ export class TableSerialsComponent implements OnInit, OnChanges {
 
   @Input() searchValue: string = '';
 
-  toppings = new FormControl();
+  genres = new FormControl();
   public genreList: string[] = [
     'Action',
     'Adult',
@@ -51,31 +51,23 @@ export class TableSerialsComponent implements OnInit, OnChanges {
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
   constructor(private req: RequestService, private router: Router) {}
-  ngOnChanges(changes: SimpleChanges): void {
-    // this.initData();
-  }
 
   ngOnInit() {
-    this.req.make('GET', `/search/shows?q=${this.searchValue}`).then((res) => {
-      const mapped = Object.keys(res).map((key) => ({
-        value: res[key].show,
-      }));
-      this.dataSource = new MatTableDataSource(ELEMENT_DATA);
-      console.log(this.dataSource);
-      this.dataSource.sort = this.sort;
-      this.sort.sort({ id: 'rating', start: 'desc' } as MatSortable);
-      this.dataSource.paginator = this.paginator;
-    });
+    this.getData;
   }
 
-  public initData() {
+  ngOnChanges(changes: SimpleChanges): void {
+    if (!changes.firstChange) {
+      this.getData();
+    }
+  }
+
+  public getData() {
     this.req.make('GET', `/search/shows?q=${this.searchValue}`).then((res) => {
       const mapped = Object.keys(res).map((key) => ({
         value: res[key].show,
       }));
       this.dataSource = new MatTableDataSource(ELEMENT_DATA);
-      this.sort.sort({ id: 'rating', start: 'desc' } as MatSortable);
-
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
     });
@@ -87,31 +79,29 @@ export class TableSerialsComponent implements OnInit, OnChanges {
 
   public filtrStatus() {
     this.dataSource.filter = this.selectedFiltrStatus.trim().toLowerCase();
-
     if (this.dataSource.paginator) {
       this.dataSource.paginator.firstPage();
     }
   }
 
-  comboChange(event) {
+  public setGenres(event) {
     if (!event) {
       this.valueSelectedMulti =
-        this.toppings.value && this.toppings.value.toString();
+        this.genres.value && this.genres.value.toString();
       this.dataSource.filter = this.valueSelectedMulti.trim().toLowerCase();
       if (this.dataSource.filteredData.length === 0) {
       }
     }
   }
 
-  resetFilter() {
+  public resetFilter() {
     this.selectedFiltrStatus = '';
     this.valueSelectedMulti = '';
 
     this.dataSource = new MatTableDataSource(ELEMENT_DATA);
     this.dataSource.paginator = this.paginator;
-    this.sort.sort({ id: 'rating', start: 'desc' } as MatSortable);
     this.dataSource.sort = this.sort;
-    this.toppings.reset();
+    this.genres.reset();
   }
 
   public setColorRating(value: string) {
@@ -182,7 +172,6 @@ const ELEMENT_DATA = [
     id: '45669',
     name: '100 Dry Dream Home',
     rating: { average: 8.1 },
-    premiered: '2010-06-30',
     genres: ['Food'],
     status: 'Running',
   },

@@ -18,7 +18,6 @@ export class SerialComponent implements OnInit {
 
   ngOnInit(): void {
     this.serialId = this.route.snapshot.paramMap.get('id');
-    console.log(' this.serialId', this.serialId);
     this.req.make('GET', `/shows/${this.serialId}`).then((res) => {
       if (res) {
         this.serial = res;
@@ -37,12 +36,11 @@ export class SerialComponent implements OnInit {
     }, 300);
   }
 
-  public setColorRating(value: string) {
+  public setColorRating(value: string): string {
     let tempValue = String(value).substr(0, String(value).lastIndexOf('.'));
 
     switch (tempValue) {
       case '0':
-        console.log('It is a Sunday.');
         return ColorRaiting.COLOR_0;
       case '1':
         return ColorRaiting.COLOR_1;

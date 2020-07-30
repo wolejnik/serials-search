@@ -17,7 +17,7 @@ export class SerialsComponent {
     this.ready = true;
   }
 
-  setInputValue(e) {
+  public setInputValue(e) {
     this.inputValue = e.target.value;
   }
 }

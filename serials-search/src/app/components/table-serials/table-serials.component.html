@@ -17,9 +17,9 @@
       <mat-form-field appearance="fill">
         <mat-label>Choose a genres</mat-label>
         <mat-select
-          [formControl]="toppings"
+          [formControl]="genres"
           multiple
-          (openedChange)="comboChange($event)"
+          (openedChange)="setGenres($event)"
         >
           <mat-option *ngFor="let genre of genreList" [value]="genre">{{
             genre
@@ -32,7 +32,6 @@
         Reset
       </button>
     </div>
-
     <mat-table [dataSource]="dataSource" matSort>
       <ng-container matColumnDef="name">
         <mat-header-cell *matHeaderCellDef mat-sort-header>
