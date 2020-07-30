@@ -31,6 +31,15 @@ body {
     flex-wrap: wrap;
     margin: auto;
     width: 80%;
+
+    &--title {
+      width: 100%;
+      padding: 0.75rem 2rem;
+    }
+
+    &--desc {
+      font-size: 1.5rem;
+    }
   }
 
   &__column {
@@ -57,6 +66,10 @@ body {
 mat-table,
 mat-paginator {
   width: 100%;
+}
+
+mat-row {
+  cursor: pointer;
 }
 
 @media screen and (max-width: 768px) {
