@@ -1,3 +1,4 @@
+import { ColorRatingService } from './../../services/color-rating/color-rating.service';
 import {
   Component,
   OnInit,
@@ -50,7 +51,7 @@ export class TableSerialsComponent implements OnInit, OnChanges {
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  constructor(private req: RequestService, private router: Router) {}
+  constructor(private req: RequestService, private router: Router, private color: ColorRatingService) {}
 
   ngOnInit() {
     this.getData;
@@ -104,34 +105,8 @@ export class TableSerialsComponent implements OnInit, OnChanges {
     this.genres.reset();
   }
 
-  public setColorRating(value: string) {
-    let tempValue = String(value).substr(0, String(value).lastIndexOf('.'));
-
-    switch (tempValue) {
-      case '0':
-        console.log('It is a Sunday.');
-        return ColorRaiting.COLOR_0;
-      case '1':
-        return ColorRaiting.COLOR_1;
-      case '2':
-        return ColorRaiting.COLOR_2;
-      case '3':
-        return ColorRaiting.COLOR_3;
-      case '4':
-        return ColorRaiting.COLOR_4;
-      case '5':
-        return ColorRaiting.COLOR_5;
-      case '6':
-        return ColorRaiting.COLOR_6;
-      case '7':
-        return ColorRaiting.COLOR_7;
-      case '8':
-        return ColorRaiting.COLOR_8;
-      case '9':
-        return ColorRaiting.COLOR_9;
-      case '10':
-        return ColorRaiting.COLOR_10;
-    }
+  public setColorRating(value: string): ColorRaiting {
+    return this.color.setColor(value);
   }
 }
 
