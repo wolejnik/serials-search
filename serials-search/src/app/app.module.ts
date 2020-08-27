@@ -1,3 +1,4 @@
+import { ColorRatingService } from './services/color-rating/color-rating.service';
 import { RequestService } from './services/request/request.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -38,7 +39,7 @@ import { SerialComponent } from './pages/serial/serial.component';
     MatPaginatorModule,
     MatSelectModule,
   ],
-  providers: [RequestService],
+  providers: [RequestService, ColorRatingService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
