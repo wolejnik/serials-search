@@ -14,6 +14,7 @@ import { FormControl } from '@angular/forms';
 import { RequestService } from 'src/app/services/request/request.service';
 import { Router } from '@angular/router';
 import { ColorRaiting } from 'src/app/model/Colors';
+import { Serial } from 'src/app/models/serial';
 
 @Component({
   selector: 'app-table-serials',
@@ -47,11 +48,16 @@ export class TableSerialsComponent implements OnInit, OnChanges {
     'To Be Determined',
     'In Development',
   ];
+  public serials: Serial[] = [];
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  constructor(private req: RequestService, private router: Router, private color: ColorRatingService) {}
+  constructor(
+    private req: RequestService,
+    private router: Router,
+    private color: ColorRatingService
+  ) {}
 
   ngOnInit() {
     this.getData;
@@ -64,18 +70,33 @@ export class TableSerialsComponent implements OnInit, OnChanges {
   }
 
   public getData() {
-    this.req.make('GET', `/search/shows?q=${this.searchValue}`).then((res) => {
-      const mapped = Object.keys(res).map((key) => ({
-        value: res[key].show,
-      }));
-      this.dataSource = new MatTableDataSource(ELEMENT_DATA);
-      this.dataSource.sort = this.sort;
-      this.dataSource.paginator = this.paginator;
-    });
+    // this.req.make('GET', `/search/shows?q=${this.searchValue}`).then((res) => {
+    //   const mapped = Object.keys(res).map((key) => ({
+    //     value: res[key].show,
+    //   }));
+    //   this.dataSource = new MatTableDataSource(ELEMENT_DATA);
+    //   this.dataSource.sort = this.sort;
+    //   this.dataSource.paginator = this.paginator;
+    // });
+    this.req
+      .request(`/search/shows?q=${this.searchValue}`)
+      .subscribe((result) => {
+        result.forEach((serial) => {
+          this.serials.push({
+            name: serial.show.name,
+            genres: serial.show.genres,
+            premiered: serial.show.premiered,
+            rating: serial.show.rating.average,
+          });
+        });
+        this.dataSource = new MatTableDataSource<Serial>(this.serials);
+        this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
+      });
   }
 
   public selectRow(row) {
-    this.router.navigate(['serial/', `${row.id}`]);
+    this.router.navigate(['serial/', `${row.show.id}`]);
   }
 
   public filtrStatus() {
@@ -99,7 +120,7 @@ export class TableSerialsComponent implements OnInit, OnChanges {
     this.selectedFiltrStatus = '';
     this.valueSelectedMulti = '';
 
-    this.dataSource = new MatTableDataSource(ELEMENT_DATA);
+    this.dataSource = new MatTableDataSource(this.serials);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
     this.genres.reset();
