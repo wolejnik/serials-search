@@ -41,9 +41,7 @@
       </ng-container>
 
       <ng-container matColumnDef="genres">
-        <mat-header-cell *matHeaderCellDef>
-          GENRES
-        </mat-header-cell>
+        <mat-header-cell *matHeaderCellDef> GENRES </mat-header-cell>
         <mat-cell *matCellDef="let row">
           {{ row.genres }}
         </mat-cell>
@@ -58,9 +56,7 @@
           <ng-container *ngIf="row.premiered; else elsePremiered">
             {{ row.premiered | date: "dd/MM/yyyy" }}
           </ng-container>
-          <ng-template #elsePremiered>
-            Lack of premiere date
-          </ng-template>
+          <ng-template #elsePremiered> Lack of premiere date </ng-template>
         </mat-cell>
       </ng-container>
 
@@ -70,14 +66,12 @@
         </mat-header-cell>
         <mat-cell *matCellDef="let row">
           <ng-container *ngIf="row.rating; else elseTemplate">
-            <p [style.color]="setColorRating(row.rating.average)">
-              {{ row.rating.average }}
+            <p [style.color]="setColorRating(row.rating)">
+              {{ row.rating }}
             </p>
           </ng-container>
           <ng-template #elseTemplate>
-            <p [style.color]="setColorRating(row.rating.average)">
-              Lack of rating
-            </p>
+            <p [style.color]="setColorRating(row.rating)">Lack of rating</p>
           </ng-template>
         </mat-cell>
       </ng-container>

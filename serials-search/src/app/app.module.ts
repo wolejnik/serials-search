@@ -1,3 +1,4 @@
+import { ColorRatingService } from './services/color-rating/color-rating.service';
 import { RequestService } from './services/request/request.service';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
@@ -16,6 +17,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { TableSerialsComponent } from './components/table-serials/table-serials.component';
 import { MatSelectModule } from '@angular/material/select';
 import { SerialComponent } from './pages/serial/serial.component';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -37,8 +39,9 @@ import { SerialComponent } from './pages/serial/serial.component';
     MatTableModule,
     MatPaginatorModule,
     MatSelectModule,
+    HttpClientModule
   ],
-  providers: [RequestService],
+  providers: [RequestService, ColorRatingService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

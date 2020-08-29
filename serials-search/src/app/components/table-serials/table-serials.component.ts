@@ -1,3 +1,4 @@
+import { ColorRatingService } from './../../services/color-rating/color-rating.service';
 import {
   Component,
   OnInit,
@@ -13,6 +14,7 @@ import { FormControl } from '@angular/forms';
 import { RequestService } from 'src/app/services/request/request.service';
 import { Router } from '@angular/router';
 import { ColorRaiting } from 'src/app/model/Colors';
+import { Serial } from 'src/app/models/serial';
 
 @Component({
   selector: 'app-table-serials',
@@ -46,11 +48,16 @@ export class TableSerialsComponent implements OnInit, OnChanges {
     'To Be Determined',
     'In Development',
   ];
+  public serials: Serial[] = [];
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
 
-  constructor(private req: RequestService, private router: Router) {}
+  constructor(
+    private req: RequestService,
+    private router: Router,
+    private color: ColorRatingService
+  ) {}
 
   ngOnInit() {
     this.getData;
@@ -63,18 +70,33 @@ export class TableSerialsComponent implements OnInit, OnChanges {
   }
 
   public getData() {
-    this.req.make('GET', `/search/shows?q=${this.searchValue}`).then((res) => {
-      const mapped = Object.keys(res).map((key) => ({
-        value: res[key].show,
-      }));
-      this.dataSource = new MatTableDataSource(ELEMENT_DATA);
-      this.dataSource.sort = this.sort;
-      this.dataSource.paginator = this.paginator;
-    });
+    // this.req.make('GET', `/search/shows?q=${this.searchValue}`).then((res) => {
+    //   const mapped = Object.keys(res).map((key) => ({
+    //     value: res[key].show,
+    //   }));
+    //   this.dataSource = new MatTableDataSource(ELEMENT_DATA);
+    //   this.dataSource.sort = this.sort;
+    //   this.dataSource.paginator = this.paginator;
+    // });
+    this.req
+      .request(`/search/shows?q=${this.searchValue}`)
+      .subscribe((result) => {
+        result.forEach((serial) => {
+          this.serials.push({
+            name: serial.show.name,
+            genres: serial.show.genres,
+            premiered: serial.show.premiered,
+            rating: serial.show.rating.average,
+          });
+        });
+        this.dataSource = new MatTableDataSource<Serial>(this.serials);
+        this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
+      });
   }
 
   public selectRow(row) {
-    this.router.navigate(['serial/', `${row.id}`]);
+    this.router.navigate(['serial/', `${row.show.id}`]);
   }
 
   public filtrStatus() {
@@ -98,40 +120,14 @@ export class TableSerialsComponent implements OnInit, OnChanges {
     this.selectedFiltrStatus = '';
     this.valueSelectedMulti = '';
 
-    this.dataSource = new MatTableDataSource(ELEMENT_DATA);
+    this.dataSource = new MatTableDataSource(this.serials);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
     this.genres.reset();
   }
 
-  public setColorRating(value: string) {
-    let tempValue = String(value).substr(0, String(value).lastIndexOf('.'));
-
-    switch (tempValue) {
-      case '0':
-        console.log('It is a Sunday.');
-        return ColorRaiting.COLOR_0;
-      case '1':
-        return ColorRaiting.COLOR_1;
-      case '2':
-        return ColorRaiting.COLOR_2;
-      case '3':
-        return ColorRaiting.COLOR_3;
-      case '4':
-        return ColorRaiting.COLOR_4;
-      case '5':
-        return ColorRaiting.COLOR_5;
-      case '6':
-        return ColorRaiting.COLOR_6;
-      case '7':
-        return ColorRaiting.COLOR_7;
-      case '8':
-        return ColorRaiting.COLOR_8;
-      case '9':
-        return ColorRaiting.COLOR_9;
-      case '10':
-        return ColorRaiting.COLOR_10;
-    }
+  public setColorRating(value: string): ColorRaiting {
+    return this.color.setColor(value);
   }
 }
 
