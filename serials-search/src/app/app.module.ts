@@ -17,6 +17,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { TableSerialsComponent } from './components/table-serials/table-serials.component';
 import { MatSelectModule } from '@angular/material/select';
 import { SerialComponent } from './pages/serial/serial.component';
+import {HttpClientModule} from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { SerialComponent } from './pages/serial/serial.component';
     MatTableModule,
     MatPaginatorModule,
     MatSelectModule,
+    HttpClientModule
   ],
   providers: [RequestService, ColorRatingService],
   bootstrap: [AppComponent],
