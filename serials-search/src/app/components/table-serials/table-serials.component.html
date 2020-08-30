@@ -32,7 +32,12 @@
         Reset
       </button>
     </div>
-    <mat-table [dataSource]="dataSource" matSort>
+    <mat-table
+      [dataSource]="dataSource"
+      matSort
+      matSortActive="rating"
+      matSortDirection="desc"
+    >
       <ng-container matColumnDef="name">
         <mat-header-cell *matHeaderCellDef mat-sort-header>
           TITLE
