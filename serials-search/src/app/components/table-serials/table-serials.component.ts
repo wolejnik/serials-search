@@ -105,7 +105,6 @@ export class TableSerialsComponent implements OnInit, OnChanges {
       this.valueSelectedMulti =
         this.genres.value && this.genres.value.toString();
       this.dataSource.filter = this.valueSelectedMulti.trim().toLowerCase();
-      console.log(this.dataSource);
       if (this.dataSource.filteredData.length === 0) {
         this.isData = false;
       }
