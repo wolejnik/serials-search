@@ -30,18 +30,7 @@ export class TableSerialsComponent implements OnInit, OnChanges {
   @Input() searchValue: string = '';
 
   genres = new FormControl();
-  public genreList: string[] = [
-    'Action',
-    'Adult',
-    'Adventure',
-    'Comedy',
-    'DIY',
-    'Family',
-    'Drama',
-    'Horror',
-    'Science-Fiction',
-    'War',
-  ];
+  public genreList: string[] = [];
   public statusList: string[] = [
     'Running',
     'Ended',
@@ -81,6 +70,7 @@ export class TableSerialsComponent implements OnInit, OnChanges {
             premiered: serial.show.premiered,
             rating: serial.show.rating.average,
           });
+          this.createGenresList(serial.show.genres);
         });
         this.isData = true;
         this.dataSource = new MatTableDataSource<Serial>(this.serials);
@@ -124,5 +114,13 @@ export class TableSerialsComponent implements OnInit, OnChanges {
 
   public setColorRating(value: string): ColorRaiting {
     return this.color.setColor(value);
+  }
+
+  public createGenresList(serial: any): void {
+    serial.forEach((ele) => {
+      if (!this.genreList.includes(ele)) {
+        this.genreList.push(ele);
+      }
+    });
   }
 }
