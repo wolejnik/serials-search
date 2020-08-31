@@ -48,7 +48,12 @@
       <ng-container matColumnDef="genres">
         <mat-header-cell *matHeaderCellDef> GENRES </mat-header-cell>
         <mat-cell *matCellDef="let row">
-          {{ row.genres }}
+          <ng-container *ngFor="let genre of row.genres; let i = index">
+            <ng-container *ngIf="i + 1 === row.genres.length; else elseGenre">
+              {{ genre }}
+            </ng-container>
+            <ng-template #elseGenre> {{ genre }}, </ng-template>
+          </ng-container>
         </mat-cell>
         <mat-cell *matCellDef="let row"> </mat-cell>
       </ng-container>

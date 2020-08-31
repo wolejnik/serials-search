@@ -70,14 +70,6 @@ export class TableSerialsComponent implements OnInit, OnChanges {
   }
 
   public getData() {
-    // this.req.make('GET', `/search/shows?q=${this.searchValue}`).then((res) => {
-    //   const mapped = Object.keys(res).map((key) => ({
-    //     value: res[key].show,
-    //   }));
-    //   this.dataSource = new MatTableDataSource(ELEMENT_DATA);
-    //   this.dataSource.sort = this.sort;
-    //   this.dataSource.paginator = this.paginator;
-    // });
     this.req
       .request(`/search/shows?q=${this.searchValue}`)
       .subscribe((result) => {
