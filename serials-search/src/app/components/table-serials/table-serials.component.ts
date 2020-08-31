@@ -49,6 +49,7 @@ export class TableSerialsComponent implements OnInit, OnChanges {
     'In Development',
   ];
   public serials: Serial[] = [];
+  public isData: boolean = false;
 
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
   @ViewChild(MatSort, { static: true }) sort: MatSort;
@@ -81,6 +82,7 @@ export class TableSerialsComponent implements OnInit, OnChanges {
             rating: serial.show.rating.average,
           });
         });
+        this.isData = true;
         this.dataSource = new MatTableDataSource<Serial>(this.serials);
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
@@ -103,7 +105,9 @@ export class TableSerialsComponent implements OnInit, OnChanges {
       this.valueSelectedMulti =
         this.genres.value && this.genres.value.toString();
       this.dataSource.filter = this.valueSelectedMulti.trim().toLowerCase();
+      console.log(this.dataSource);
       if (this.dataSource.filteredData.length === 0) {
+        this.isData = false;
       }
     }
   }
@@ -116,6 +120,7 @@ export class TableSerialsComponent implements OnInit, OnChanges {
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
     this.genres.reset();
+    this.isData = true;
   }
 
   public setColorRating(value: string): ColorRaiting {

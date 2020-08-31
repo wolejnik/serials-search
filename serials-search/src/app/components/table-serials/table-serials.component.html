@@ -32,67 +32,72 @@
         Reset
       </button>
     </div>
-    <mat-table
-      [dataSource]="dataSource"
-      matSort
-      matSortActive="rating"
-      matSortDirection="desc"
-    >
-      <ng-container matColumnDef="name">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>
-          TITLE
-        </mat-header-cell>
-        <mat-cell *matCellDef="let row"> {{ row.name }} </mat-cell>
-      </ng-container>
-
-      <ng-container matColumnDef="genres">
-        <mat-header-cell *matHeaderCellDef> GENRES </mat-header-cell>
-        <mat-cell *matCellDef="let row">
-          <ng-container *ngFor="let genre of row.genres; let i = index">
-            <ng-container *ngIf="i + 1 === row.genres.length; else elseGenre">
-              {{ genre }}
-            </ng-container>
-            <ng-template #elseGenre> {{ genre }}, </ng-template>
-          </ng-container>
-        </mat-cell>
-        <mat-cell *matCellDef="let row"> </mat-cell>
-      </ng-container>
-
-      <ng-container matColumnDef="premiered">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>
-          PREMIERE DATE
-        </mat-header-cell>
-        <mat-cell *matCellDef="let row">
-          <ng-container *ngIf="row.premiered; else elsePremiered">
-            {{ row.premiered | date: "dd/MM/yyyy" }}
-          </ng-container>
-          <ng-template #elsePremiered> Lack of premiere date </ng-template>
-        </mat-cell>
-      </ng-container>
-
-      <ng-container matColumnDef="rating">
-        <mat-header-cell *matHeaderCellDef mat-sort-header>
-          RATING
-        </mat-header-cell>
-        <mat-cell *matCellDef="let row">
-          <ng-container *ngIf="row.rating; else elseTemplate">
-            <p [style.color]="setColorRating(row.rating)">
-              {{ row.rating }}
-            </p>
-          </ng-container>
-          <ng-template #elseTemplate>
-            <p [style.color]="setColorRating(row.rating)">Lack of rating</p>
-          </ng-template>
-        </mat-cell>
-      </ng-container>
-
-      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-      <mat-row
-        *matRowDef="let row; columns: displayedColumns"
-        (click)="selectRow(row)"
+    <ng-container *ngIf="isData; else emptyTable">
+      <mat-table
+        [dataSource]="dataSource"
+        matSort
+        matSortActive="rating"
+        matSortDirection="desc"
       >
-      </mat-row>
-    </mat-table>
-    <mat-paginator [pageSizeOptions]="[5, 10, 25]"></mat-paginator>
+        <ng-container matColumnDef="name">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            TITLE
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row"> {{ row.name }} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="genres">
+          <mat-header-cell *matHeaderCellDef> GENRES </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            <ng-container *ngFor="let genre of row.genres; let i = index">
+              <ng-container *ngIf="i + 1 === row.genres.length; else elseGenre">
+                {{ genre }}
+              </ng-container>
+              <ng-template #elseGenre> {{ genre }}, </ng-template>
+            </ng-container>
+          </mat-cell>
+          <mat-cell *matCellDef="let row"> </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="premiered">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            PREMIERE DATE
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            <ng-container *ngIf="row.premiered; else elsePremiered">
+              {{ row.premiered | date: "dd/MM/yyyy" }}
+            </ng-container>
+            <ng-template #elsePremiered> Lack of premiere date </ng-template>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="rating">
+          <mat-header-cell *matHeaderCellDef mat-sort-header>
+            RATING
+          </mat-header-cell>
+          <mat-cell *matCellDef="let row">
+            <ng-container *ngIf="row.rating; else elseTemplate">
+              <p [style.color]="setColorRating(row.rating)">
+                {{ row.rating }}
+              </p>
+            </ng-container>
+            <ng-template #elseTemplate>
+              <p [style.color]="setColorRating(row.rating)">Lack of rating</p>
+            </ng-template>
+          </mat-cell>
+        </ng-container>
+
+        <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row
+          *matRowDef="let row; columns: displayedColumns"
+          (click)="selectRow(row)"
+        >
+        </mat-row>
+      </mat-table>
+      <mat-paginator [pageSizeOptions]="[5, 10, 25]"></mat-paginator>
+    </ng-container>
+    <ng-template #emptyTable>
+      <h3>No matching series found!</h3>
+    </ng-template>
   </div>
 </div>
