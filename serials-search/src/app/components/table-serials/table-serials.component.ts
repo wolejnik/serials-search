@@ -65,6 +65,7 @@ export class TableSerialsComponent implements OnInit, OnChanges {
       .subscribe((result) => {
         result.forEach((serial) => {
           this.serials.push({
+            id: serial.show.id,
             name: serial.show.name,
             genres: serial.show.genres,
             premiered: serial.show.premiered,
@@ -80,7 +81,7 @@ export class TableSerialsComponent implements OnInit, OnChanges {
   }
 
   public selectRow(row) {
-    this.router.navigate(['serial/', `${row.show.id}`]);
+    this.router.navigate(['serial/', `${row.id}`]);
   }
 
   public filtrStatus() {
