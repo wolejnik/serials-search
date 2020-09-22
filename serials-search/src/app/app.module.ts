@@ -17,7 +17,9 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { TableSerialsComponent } from './components/table-serials/table-serials.component';
 import { MatSelectModule } from '@angular/material/select';
 import { SerialComponent } from './pages/serial/serial.component';
-import {HttpClientModule} from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
+import { StoreModule } from '@ngrx/store';
+import { serialsReducer } from './store/reducers/serials.reducers';
 
 @NgModule({
   declarations: [
@@ -39,7 +41,8 @@ import {HttpClientModule} from '@angular/common/http';
     MatTableModule,
     MatPaginatorModule,
     MatSelectModule,
-    HttpClientModule
+    HttpClientModule,
+    StoreModule.forRoot({ serials: serialsReducer }),
   ],
   providers: [RequestService, ColorRatingService],
   bootstrap: [AppComponent],

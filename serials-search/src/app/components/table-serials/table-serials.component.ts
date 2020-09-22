@@ -15,6 +15,9 @@ import { RequestService } from 'src/app/services/request/request.service';
 import { Router } from '@angular/router';
 import { ColorRaiting } from 'src/app/model/Colors';
 import { Serial } from 'src/app/models/serial';
+import { select, Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import * as counterAction from '../../store/actions/serials.actions';
 
 @Component({
   selector: 'app-table-serials',
@@ -46,11 +49,13 @@ export class TableSerialsComponent implements OnInit, OnChanges {
   constructor(
     private req: RequestService,
     private router: Router,
-    private color: ColorRatingService
+    private color: ColorRatingService,
+    private store: Store<{ count: number }>
   ) {}
 
   ngOnInit() {
     this.getData;
+    this.count$ = this.store.pipe(select('count'));
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -77,6 +82,7 @@ export class TableSerialsComponent implements OnInit, OnChanges {
         this.dataSource = new MatTableDataSource<Serial>(this.serials);
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
+        // this.store.dispatch(serialsActions.setSrials({ data: this.serials }));
       });
   }
 
@@ -123,5 +129,19 @@ export class TableSerialsComponent implements OnInit, OnChanges {
         this.genreList.push(ele);
       }
     });
+  }
+
+  count$: Observable<number>;
+
+  increment() {
+    this.store.dispatch(counterAction.increment({ value: 1 }));
+  }
+
+  decrement() {
+    this.store.dispatch(counterAction.decrement({ value: 1 }));
+  }
+
+  reset() {
+    this.store.dispatch(counterAction.reset({ value: 0 }));
   }
 }
