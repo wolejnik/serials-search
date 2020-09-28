@@ -82,7 +82,7 @@ export class TableSerialsComponent implements OnInit, OnChanges {
         this.dataSource = new MatTableDataSource<Serial>(this.serials);
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
-        // this.store.dispatch(serialsActions.setSrials({ data: this.serials }));
+        this.mookData();
       });
   }
 
@@ -133,15 +133,7 @@ export class TableSerialsComponent implements OnInit, OnChanges {
 
   count$: Observable<number>;
 
-  increment() {
-    this.store.dispatch(counterAction.increment({ value: 1 }));
-  }
-
-  decrement() {
-    this.store.dispatch(counterAction.decrement({ value: 1 }));
-  }
-
-  reset() {
-    this.store.dispatch(counterAction.reset({ value: 0 }));
+  mookData() {
+    this.store.dispatch(counterAction.saveSerials({ value: this.serials }));
   }
 }
