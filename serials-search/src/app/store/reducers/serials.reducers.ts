@@ -1,35 +1,28 @@
 import { state } from '@angular/animations';
 import { createReducer, on } from '@ngrx/store';
-import { increment, decrement, reset } from '../actions/serials.actions';
+import { saveSerials, searchedSerial } from '../actions/serials.actions';
 
 export const serialsFeatureKey: string = 'serials';
 
 export interface SerialsState {
+  searchSerial: string;
   serials: any;
-  value: number;
 }
 
 export const initialState: SerialsState = {
+  searchSerial: null,
   serials: null,
-  value: 0,
 };
 
 const _serialsReducer = createReducer(
   initialState,
-  on(increment, (state, { value }) => ({
+  on(saveSerials, (state, { value }) => ({
     ...state,
-    serials: null,
-    value: value,
+    serials: value,
   })),
-  on(decrement, (state, { value }) => ({
+  on(searchedSerial, (state, { value }) => ({
     ...state,
-    serials: null,
-    value: value,
-  })),
-  on(reset, (state, { value }) => ({
-    ...state,
-    serials: null,
-    value: value,
+    searchSerial: value,
   }))
 );
 
@@ -38,3 +31,4 @@ export function serialsReducer(state, action) {
 }
 
 export const getSerials = (state: SerialsState) => state.serials;
+export const getSerial = (state: SerialsState) => state.searchSerial;

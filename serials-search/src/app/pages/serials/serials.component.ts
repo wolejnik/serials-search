@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { Store } from '@ngrx/store';
+import * as counterAction from '../../store/actions/serials.actions';
 
 @Component({
   selector: 'app-serials',
@@ -9,7 +11,7 @@ export class SerialsComponent {
   public inputValue: string = '';
   public ready: boolean = false;
 
-  constructor() {}
+  constructor(private store: Store) {}
 
   public searchSerials() {
     if (this.inputValue === '') return;
@@ -19,5 +21,8 @@ export class SerialsComponent {
 
   public setInputValue(e) {
     this.inputValue = e.target.value;
+    this.store.dispatch(
+      counterAction.searchedSerial({ value: this.inputValue })
+    );
   }
 }

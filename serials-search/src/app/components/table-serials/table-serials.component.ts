@@ -50,12 +50,11 @@ export class TableSerialsComponent implements OnInit, OnChanges {
     private req: RequestService,
     private router: Router,
     private color: ColorRatingService,
-    private store: Store<{ count: number }>
+    private store: Store
   ) {}
 
   ngOnInit() {
     this.getData;
-    this.count$ = this.store.pipe(select('count'));
   }
 
   ngOnChanges(changes: SimpleChanges): void {
@@ -130,8 +129,6 @@ export class TableSerialsComponent implements OnInit, OnChanges {
       }
     });
   }
-
-  count$: Observable<number>;
 
   mookData() {
     this.store.dispatch(counterAction.saveSerials({ value: this.serials }));
