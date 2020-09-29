@@ -13,4 +13,7 @@ export const reducers: ActionReducerMap<AppState> = {
 export const getState = (state: AppState) => state.serials;
 
 export const getSerialsData = createSelector(getState, fromSerials.getSerials);
-export const getSettingsData = createSelector(getState, fromSerials.getSerials);
+export const getSearcherSerialData = createSelector(
+  getState,
+  fromSerials.getSerial
+);

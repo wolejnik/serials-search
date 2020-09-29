@@ -64,6 +64,7 @@ export class TableSerialsComponent implements OnInit, OnChanges {
   }
 
   public getData() {
+    this.serials = [];
     this.req
       .request(`/search/shows?q=${this.searchValue}`)
       .subscribe((result) => {
