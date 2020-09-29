@@ -15,6 +15,9 @@ import { RequestService } from 'src/app/services/request/request.service';
 import { Router } from '@angular/router';
 import { ColorRaiting } from 'src/app/model/Colors';
 import { Serial } from 'src/app/models/serial';
+import { select, Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
+import * as counterAction from '../../store/actions/serials.actions';
 
 @Component({
   selector: 'app-table-serials',
@@ -46,7 +49,8 @@ export class TableSerialsComponent implements OnInit, OnChanges {
   constructor(
     private req: RequestService,
     private router: Router,
-    private color: ColorRatingService
+    private color: ColorRatingService,
+    private store: Store
   ) {}
 
   ngOnInit() {
@@ -60,6 +64,7 @@ export class TableSerialsComponent implements OnInit, OnChanges {
   }
 
   public getData() {
+    this.serials = [];
     this.req
       .request(`/search/shows?q=${this.searchValue}`)
       .subscribe((result) => {
@@ -77,6 +82,7 @@ export class TableSerialsComponent implements OnInit, OnChanges {
         this.dataSource = new MatTableDataSource<Serial>(this.serials);
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
+        this.mookData();
       });
   }
 
@@ -123,5 +129,9 @@ export class TableSerialsComponent implements OnInit, OnChanges {
         this.genreList.push(ele);
       }
     });
+  }
+
+  mookData() {
+    this.store.dispatch(counterAction.saveSerials({ value: this.serials }));
   }
 }

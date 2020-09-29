@@ -17,7 +17,10 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { TableSerialsComponent } from './components/table-serials/table-serials.component';
 import { MatSelectModule } from '@angular/material/select';
 import { SerialComponent } from './pages/serial/serial.component';
-import {HttpClientModule} from '@angular/common/http';
+import { HttpClientModule } from '@angular/common/http';
+import { StoreModule } from '@ngrx/store';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { reducers } from './store/reducers';
 
 @NgModule({
   declarations: [
@@ -39,7 +42,13 @@ import {HttpClientModule} from '@angular/common/http';
     MatTableModule,
     MatPaginatorModule,
     MatSelectModule,
-    HttpClientModule
+    HttpClientModule,
+      StoreModule.forRoot(reducers),
+      // Instrumentation must be imported after importing StoreModule (config is optional)
+      StoreDevtoolsModule.instrument({
+        maxAge: 25, // Retains last 25 states
+        // logOnly: environment.production, // Restrict extension to log-only mode
+      }),
   ],
   providers: [RequestService, ColorRatingService],
   bootstrap: [AppComponent],
